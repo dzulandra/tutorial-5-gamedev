@@ -43,7 +43,7 @@ func get_input():
 		$CollisionShape2D.scale.y = 1.0
 		anim_sprite.play("default")
 		speed = 400
-	if Input.is_action_pressed("shift") and is_on_floor():
+	if Input.is_action_pressed("shift") and is_on_floor() and !is_crouching:
 		speed = 800
 	elif Input.is_action_just_released("shift"):
 		speed = 400
