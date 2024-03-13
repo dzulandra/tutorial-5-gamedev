@@ -7,8 +7,7 @@ var jump_count = 0
 var max_jump = 2
 var is_crouching = false
 var anim_sprite : AnimatedSprite
-
-
+var is_jumping = false
 const UP = Vector2(0,-1)
 
 var velocity = Vector2()
@@ -22,7 +21,9 @@ func get_input():
 	var is_moving = false
 	if is_on_floor():
 		jump_count = 0
+		is_jumping = false
 	if Input.is_action_just_pressed('ui_up') and jump_count < max_jump and !is_crouching:
+		is_jumping = true
 		velocity.y = jump_speed
 		jump_count += 1
 	if Input.is_action_pressed('ui_right'):
@@ -48,10 +49,12 @@ func get_input():
 	elif Input.is_action_just_released("shift"):
 		speed = 400
 		
-	if is_moving:
+	if is_moving and not is_jumping:
 		anim_sprite.play("Walk")
 	elif is_crouching:
 		anim_sprite.play("Crouch")
+	elif is_jumping:
+		anim_sprite.play("Jump")
 	else:
 		anim_sprite.play("default")
 
